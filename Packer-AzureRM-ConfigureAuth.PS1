@@ -13,6 +13,7 @@ Foreach ($Sub in $Subs) {
     $Answer = Read-Host "Use this subscription? [Y/N]"
     if ($Answer -eq "y") {
         $SubscriptionId = $Sub.SubscriptionId
+        $Selected = Select-AzureRmSubscription -SubscriptionId $Sub.SubscriptionId
         Break
     }
 }
