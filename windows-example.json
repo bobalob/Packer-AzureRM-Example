@@ -1,0 +1,48 @@
+{
+  
+  "variables": {
+    "azure_client_id": "{{env `PACKER_ARM_CLIENT_ID`}}",
+    "azure_client_secret": "{{env `PACKER_ARM_CLIENT_SECRET`}}",
+    "azure_subscription_id": "{{env `PACKER_ARM_SUBSCRIPTION_ID`}}",
+    "azure_object_id": "{{env `PACKER_ARM_OBJECT_ID`}}"
+  },
+
+  "builders": [{
+    "type": "azure-arm",
+
+    "client_id": "{{user `azure_client_id`}}",
+    "client_secret": "{{user `azure_client_secret`}}",
+    "subscription_id": "{{user `azure_subscription_id`}}",
+    "object_id": "{{user `azure_object_id`}}",
+
+    "resource_group_name": "packerdemo",
+    "storage_account": "packerstorages99",
+
+    "capture_container_name": "images",
+    "capture_name_prefix": "packer",
+
+    "os_type": "Windows",
+    "image_publisher": "MicrosoftWindowsServer",
+    "image_offer": "WindowsServer",
+    "image_sku": "2016-Datacenter",
+
+    "communicator": "winrm",
+    "winrm_use_ssl": "true",
+    "winrm_insecure": "true",
+    "winrm_timeout": "3m",
+    "winrm_username": "packer",
+
+    "azure_tags": {
+      "usage": "packerDemo"
+    },
+
+    "location": "North Europe",
+    "vm_size": "Standard_A2"
+  }],
+
+  "provisioners": [{
+    "type": "powershell",
+    "inline": ["dir c:\\"]
+  }]
+
+}
